@@ -101,16 +101,18 @@ class BlogController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+public function destroy($id)
 {
-    $blog = Blog::findOrFail($id); // ✅ Fetch the blog by ID
+    $blog = Blog::findOrFail($id);
 
-    if ($blog->user_id === Auth::id()) {
-        $blog->delete();
-        return back()->with('success', 'Post deleted successfully.');
+    // Only owner or admin can delete
+    if (Auth::id() !== $blog->user_id && Auth::user()->role != 1) {
+        abort(403, 'Unauthorized action.');
     }
 
-    return back()->with('error', 'You are not authorized to delete this post.');
+    $blog->delete();
+    return redirect()->back()->with('success', 'Post deleted successfully.');
 }
+
 
 }
