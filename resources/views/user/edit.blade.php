@@ -8,9 +8,9 @@
                 <div class="card-header">Edit User</div>
 
                 <div class="card-body">
-                    <form action="{{ route('user.update', $user->id) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        @method('put')
+                        @method('PUT')
 
                         {{-- Name --}}
                         <div class="mb-3">
@@ -27,11 +27,16 @@
                         {{-- Role --}}
                         <div class="mb-3">
                             <label class="form-label">Role</label>
-                            <input type="text" name="role" class="form-control" value="{{ old('role', $user->role) }}">
+                            <select name="role" id="role" class="form-select">
+                                <option value="">Select Role</option>
+                                <option value="1" {{ old('role', $user->role) == '1' ? 'selected' : '' }}>1 (Admin)</option>
+                                <option value="2" {{ old('role', $user->role) == '2' ? 'selected' : '' }}>2 (Teacher)</option>
+                                <option value="3" {{ old('role', $user->role) == '3' ? 'selected' : '' }}>3 (Student)</option>
+                            </select>
                         </div>
 
                         {{-- Department --}}
-                        <div class="mb-3">
+                        <div class="mb-3" id="department_field">
                             <label class="form-label">Department</label>
                             <select name="department_id" class="form-select">
                                 <option value="">Select Department</option>
@@ -44,7 +49,7 @@
                         </div>
 
                         {{-- Academic Year --}}
-                        <div class="mb-3">
+                        <div class="mb-3" id="academic_year_field">
                             <label class="form-label">Academic Year</label>
                             <select name="academic_year_id" class="form-select">
                                 <option value="">Select Academic Year</option>
@@ -55,6 +60,37 @@
                                 @endforeach
                             </select>
                         </div>
+
+                        {{-- Roll Number --}}
+                        <div class="mb-3" id="roll_number_field">
+                            <label class="form-label">Roll Number</label>
+                            <input type="text" name="roll_number" class="form-control" value="{{ old('roll_number', $user->roll_number) }}">
+                        </div>
+
+                        {{-- JS: Toggle student-only fields --}}
+                        <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            const roleSelect = document.getElementById('role');
+                            const departmentField = document.getElementById('department_field');
+                            const academicYearField = document.getElementById('academic_year_field');
+                            const rollNumberField = document.getElementById('roll_number_field');
+
+                            function toggleFields() {
+                                if (roleSelect.value === '3') {
+                                    departmentField.style.display = '';
+                                    academicYearField.style.display = '';
+                                    rollNumberField.style.display = '';
+                                } else {
+                                    departmentField.style.display = 'none';
+                                    academicYearField.style.display = 'none';
+                                    rollNumberField.style.display = 'none';
+                                }
+                            }
+
+                            toggleFields();
+                            roleSelect.addEventListener('change', toggleFields);
+                        });
+                        </script>
 
                         {{-- Phone --}}
                         <div class="mb-3">
@@ -74,12 +110,6 @@
                             <textarea name="address" class="form-control">{{ old('address', $user->address) }}</textarea>
                         </div>
 
-                        {{-- Roll Number --}}
-                        <div class="mb-3">
-                            <label class="form-label">Roll Number</label>
-                            <input type="text" name="roll_number" class="form-control" value="{{ old('roll_number', $user->roll_number) }}">
-                        </div>
-
                         {{-- Father Name --}}
                         <div class="mb-3">
                             <label class="form-label">Father Name</label>
@@ -89,10 +119,10 @@
                         {{-- Password --}}
                         <div class="mb-3">
                             <label class="form-label">Password</label>
-                            <input type="text" name="password" class="form-control" value="{{ old('password', $user->password) }}">
+                            <input type="password" name="password" class="form-control" placeholder="Enter new password (optional)">
                         </div>
 
-                       {{-- Gender --}}
+                        {{-- Gender --}}
                         <div class="mb-3">
                             <label class="form-label">Gender</label>
                             <select name="gender" class="form-select">
@@ -102,7 +132,6 @@
                                 <option value="other" {{ old('gender', strtolower($user->gender)) === 'other' ? 'selected' : '' }}>Other</option>
                             </select>
                         </div>
-
 
                         {{-- NRC --}}
                         <div class="mb-3">
@@ -115,7 +144,7 @@
                             <label class="form-label">Profile Image</label>
                             <input type="file" name="profile_image" class="form-control">
                             @if($user->profile_image)
-                                <img src="{{ asset('storage/'.$user->profile_image) }}" width="80" class="mt-2">
+                                <img src="{{ asset('storage/'.$user->profile_image) }}" width="80" class="mt-2 rounded">
                             @endif
                         </div>
 

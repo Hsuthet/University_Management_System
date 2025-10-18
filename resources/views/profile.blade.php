@@ -8,15 +8,36 @@
         <div class="card shadow-sm border-0 rounded-4 overflow-hidden" style="background-color: #f9fafb;">
 
             <!-- Header with pale background -->
-            <div class="card-header text-center position-relative py-5" style="background-color: #e5e7eb;">
-              <img src="{{ asset('images/profile.jpg') }}" 
-                     class="rounded-circle mb-3 shadow-sm border" 
-                     alt="Profile Photo" width="120" height="120">
+           <div class="card-header text-center position-relative py-5" style="background-color: #e5e7eb;">
 
-                <h4 class="fw-bold mb-0">{{ $user['name'] }}</h4>
-                <p class="text-muted mb-0">{{ $user['role'] }} • {{ $user['department'] }}</p>
-                <p class="text-muted small">{{ $user['academic_year'] }}</p>
-            </div>
+    {{-- Profile Image --}}
+    @if ($user->profile_image)
+        <img src="{{ asset('storage/' . $user->profile_image) }}" 
+             alt="Profile Image" 
+             class="rounded-circle mb-3 shadow-sm border" 
+             width="150" height="150">
+    @else
+        <img src="{{ asset('images/default-avatar.png') }}" 
+             alt="Default Avatar" 
+             class="rounded-circle mb-3 shadow-sm border" 
+             width="150" height="150">
+    @endif
+
+    {{-- Name --}}
+    <h4 class="fw-bold mb-0">{{ $user->name }}</h4>
+
+    {{-- Role & Department --}}
+    <p class="text-muted mb-0">
+        {{ $user->role ?? 'User' }} 
+        @if ($user->department)
+            • {{ $user->department->name }}
+        @endif
+    </p>
+
+    {{-- Academic Year --}}
+    <p class="text-muted small">{{ $user->academic_year ?? 'N/A' }}</p>
+
+</div>
 
             <!-- Profile Details Table -->
             <div class="card-body p-4">
@@ -29,7 +50,7 @@
                             </tr>
                             <tr>
                                 <th class="text-muted"><i class="bi bi-telephone-fill me-2"></i>Phone</th>
-                                <td>{{ $user['phone'] }}</td>
+                                <td>{{ $user['phone_number'] }}</td>
                             </tr>
                             <tr>
                                 <th class="text-muted"><i class="bi bi-gift-fill me-2"></i>Age</th>

@@ -62,7 +62,7 @@ class UserController extends Controller
 
         User::create($data);
 
-        return redirect()->route('user.index');
+        return redirect()->route('users.index');
     }
 
     public function edit($id) {
@@ -72,42 +72,45 @@ class UserController extends Controller
         return view('user.edit', compact('user','departments','academicYears'));
     }
 
-    public function update(Request $request, $id) {
-        $user = User::findOrFail($id);
+  public function update(Request $request, $id)
+{
+    $user = User::findOrFail($id);
 
-        $request->validate([
-            'name'=>'required|string|max:255',
-            'email'=>'required|email|unique:users,email,'.$user->id,
-            'role'=>'nullable|string',
-            'department_id'=>'nullable|exists:departments,id',
-            'phone_number'=>'nullable|string|max:20',
-            'academic_year_id'=>'nullable|exists:academic_years,id',
-            'age'=>'nullable|integer',
-            'address'=>'nullable|string',
-            'roll_number'=>'nullable|string',
-            'father_name'=>'nullable|string',
-            'password'=>'nullable|string|min:6|confirmed',
-            'gender'=>'nullable|in:male,female,other',
-            'nrc'=>'nullable|string',
-            'profile_image'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-        ]);
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email,' . $user->id,
+        'role' => 'nullable|string',
+        'department_id' => 'nullable|exists:departments,id',
+        'phone_number' => 'nullable|string|max:20',
+        'academic_year_id' => 'nullable|exists:academic_years,id',
+        'age' => 'nullable|integer',
+        'address' => 'nullable|string',
+        'roll_number' => 'nullable|string',
+        'father_name' => 'nullable|string',
+        'password' => 'nullable|string|min:6', 
+        'gender' => 'nullable|in:male,female,other',
+        'nrc' => 'nullable|string',
+        'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+    ]);
 
-        $data = $request->except('password','profile_image');
-        if($request->password){
-            $data['password'] = Hash::make($request->password);
-        }
+    $data = $request->except('password', 'profile_image');
 
-        if($request->hasFile('profile_image')){
-            if($user->profile_image){
-                Storage::disk('public')->delete($user->profile_image);
-            }
-            $data['profile_image'] = $request->file('profile_image')->store('users','public');
-        }
-
-        $user->update($data);
-
-        return redirect()->route('user.index');
+    if ($request->filled('password')) {
+        $data['password'] = Hash::make($request->password);
     }
+
+    if ($request->hasFile('profile_image')) {
+        if ($user->profile_image) {
+            Storage::disk('public')->delete($user->profile_image);
+        }
+        $data['profile_image'] = $request->file('profile_image')->store('users', 'public');
+    }
+
+    $user->update($data);
+
+    return redirect()->route('user.index')->with('success', 'User updated successfully.');
+}
+
 
     public function destroy($id){
         $user = User::findOrFail($id);

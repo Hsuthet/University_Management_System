@@ -6,9 +6,11 @@
           <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center w-100">
                         <h5 class="mb-0 fw-bold">Notice List</h5>
+                        @if(Auth::user()->role == 1)
                         <a href="{{ route('notices.create') }}" class="btn btn-primary btn-sm">
                             + Add Notice
                         </a>
+                        @endif
                     </div>
                 </div>
         <div class="card-body">
@@ -26,7 +28,9 @@
                         <th>Image</th>
                         <th class="text-nowrap">Academic Year</th>
                         <th>Department</th>
+                         @if(Auth::user()->role == 1)
                         <th>Action</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -44,7 +48,8 @@
                             </td>
                             <td>{{ $notice->academicYear->name ?? '-' }}</td>
                             <td>{{ $notice->department->name ?? '-' }}</td>
-                             <td class="d-flex align-items-center gap-1">
+                             @if(Auth::user()->role == 1) 
+                            <td class="d-flex align-items-center gap-1">
                                     <!-- Edit Button -->
                                     <a href="{{ route('notices.edit', $notice->id) }}" class="btn btn-warning btn-sm d-flex align-items-center gap-1" style="padding: 0.25rem 0.5rem;">
                                         <i class="bi bi-pencil-square"></i>
@@ -61,6 +66,7 @@
                                         </button>
                                     </form>
                                 </td>
+                                @endif
                         </tr>
                     @empty
                         <tr><td colspan="9" class="text-center">No notices found</td></tr>

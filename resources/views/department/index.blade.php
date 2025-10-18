@@ -43,7 +43,9 @@
                             <th>#</th>
                             <th>Name</th>
                             <th>Content</th>
+                             @if(Auth::user()->role == 1)
                             <th>Action</th>
+                             @endif
                         </tr>
                     </thead>
                     <tbody>

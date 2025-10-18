@@ -9,9 +9,11 @@
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center w-100">
                         <h5 class="mb-0 fw-bold">Timetable List</h5>
+                        @if(Auth::user()->role == 1)
                         <a href="{{ route('timetable.create') }}" class="btn btn-primary btn-sm">
                             + Add Timetable
                         </a>
+                        @endif
                     </div>
                 </div>
 
@@ -32,7 +34,7 @@
                                     <th>Day</th>
                                     <th>Start Time</th>
                                     <th>End Time</th>
-                                    <th>Action</th>
+                                     @if(Auth::user()->role == 1)<th>Action</th>@endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -45,6 +47,7 @@
     <td>{{ $timetable->day }}</td>
     <td>{{ $timetable->start_time }}</td>
     <td>{{ $timetable->end_time }}</td>
+     @if(Auth::user()->role == 1)
     <td>
         <a href="{{ route('timetable.edit', $timetable->id) }}" class="btn btn-warning btn-sm">
             <i class="bi bi-pencil-square"></i>
@@ -60,6 +63,7 @@
             </button>
         </form>
     </td>
+    @endif
 </tr>
 @endforeach
 

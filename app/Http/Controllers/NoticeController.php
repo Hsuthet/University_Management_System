@@ -26,35 +26,40 @@ class NoticeController extends Controller
     }
 
     // Store new notice
-    public function store(Request $request)
-    {
-        $request->validate([
-            'event_name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'date' => 'required|date',
-            'location' => 'nullable|string|max:150',
-            'notice_image' => 'nullable|image|max:2048',
-            'academic_year_id' => 'required|exists:academic_years,id',
-            'department_id' => 'required|exists:departments,id',
-        ]);
+    // public function store(Request $request)
+    // {
+    //     $request->validate([
+    //         'event_name' => 'required|string|max:255',
+    //         'description' => 'nullable|string',
+    //         'date' => 'required|date',
+    //         'location' => 'nullable|string|max:150',
+    //         'notice_image' => 'nullable|image|max:2048',
+    //         'academic_year_id' => 'required|exists:academic_years,id',
+    //         'department_id' => 'required|exists:departments,id',
+    //     ]);
 
-        $data = $request->only(
-            'event_name',
-            'description',
-            'date',
-            'location',
-            'academic_year_id',
-            'department_id'
-        );
+    //     $data = $request->only(
+    //         'event_name',
+    //         'description',
+    //         'date',
+    //         'location',
+    //         'academic_year_id',
+    //         'department_id'
+    //     );
 
-        if ($request->hasFile('notice_image')) {
-            $data['notice_image'] = $request->file('notice_image')->store('notices', 'public');
-        }
+    //     if ($request->hasFile('notice_image')) {
+    //         $data['notice_image'] = $request->file('notice_image')->store('notices', 'public');
+    //     }
 
-        Notice::create($data);
+    //     Notice::create($data);
 
-        return redirect()->route('notices.index');
-    }
+    //     return redirect()->route('notices.index');
+    // }
+
+   
+    // public function store(StoreNoticeRequest){
+
+    // }
 
     // Show edit form
     public function edit($id)

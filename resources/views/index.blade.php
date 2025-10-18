@@ -90,48 +90,68 @@
             </li>
             <!--end::Fullscreen Toggle-->
             <!--begin::User Menu Dropdown-->
-            <li class="nav-item dropdown user-menu">
-              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                <img
-                  src="{{ asset('dist/assets/img/user2-160x160.jpg') }}"
-                  class="user-image rounded-circle shadow"
-                  alt="User Image"
-                />
-                <span class="d-none d-md-inline">Alexander Pierce</span>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                <!--begin::User Image-->
-                <li class="user-header text-bg-primary">
-                  <img
-                    src="../../dist/assets/img/user2-160x160.jpg"
-                    class="rounded-circle shadow"
-                    alt="User Image"
-                  />
-                  <p>
-                    Alexander Pierce - Web Developer
-                    <small>Member since Nov. 2023</small>
-                  </p>
-                </li>
-                <!--end::User Image-->
-                <!--begin::Menu Body-->
-                <li class="user-body">
-                  <!--begin::Row-->
-                  <div class="row">
-                    <div class="col-4 text-center"><a href="#">Followers</a></div>
-                    <div class="col-4 text-center"><a href="#">Sales</a></div>
-                    <div class="col-4 text-center"><a href="#">Friends</a></div>
-                  </div>
-                  <!--end::Row-->
-                </li>
-                <!--end::Menu Body-->
-                <!--begin::Menu Footer-->
-                <li class="user-footer">
-                  <a href="{{ route('profiles.show') }}" class="btn btn-default btn-flat">Profile</a>
-                  <a href="#" class="btn btn-default btn-flat float-end">Sign out</a>
-                </li>
-                <!--end::Menu Footer-->
-              </ul>
-            </li>
+           <li class="nav-item dropdown">
+  <a
+    class="nav-link d-flex align-items-center"
+    href="#"
+    id="userDropdown"
+    role="button"
+    data-bs-toggle="dropdown"
+    aria-expanded="false"
+  >
+    <img
+      src="{{ Auth::user()->profile_image 
+            ? asset('storage/' . Auth::user()->profile_image) 
+            : asset('dist/assets/img/default-avatar.png') }}"
+      alt="User Avatar"
+      class="rounded-circle me-2"
+      style="width: 35px; height: 35px; object-fit: cover;"
+    />
+    <div class="d-none d-md-block text-start">
+      <span class="fw-semibold">{{ Auth::user()->name }}</span><br />
+    </div>
+    <i class="bi bi-chevron-down ms-2"></i>
+  </a>
+
+  <ul
+    class="dropdown-menu dropdown-menu-end shadow-lg border-0 p-2"
+    aria-labelledby="userDropdown"
+    style="min-width: 220px;"
+  >
+    <li class="text-center p-2 border-bottom">
+      <img
+        src="{{ Auth::user()->profile_image 
+              ? asset('storage/' . Auth::user()->profile_image) 
+              : asset('dist/assets/img/default-avatar.png') }}"
+        alt="Profile"
+        class="rounded-circle mb-2"
+        style="width: 60px; height: 60px; object-fit: cover;"
+      />
+      <h6 class="mb-0">{{ Auth::user()->name }}</h6>
+      <small class="text-muted">{{ Auth::user()->email }}</small>
+    </li>
+    <li>
+      <a href="{{ route('profiles.show') }}" class="dropdown-item">
+        <i class="bi bi-person me-2"></i> Profile
+      </a>
+    </li>
+    <li><hr class="dropdown-divider" /></li>
+    <li>
+      <a
+        href="{{ route('logout') }}"
+        class="dropdown-item text-danger"
+        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+      >
+        <i class="bi bi-box-arrow-right me-2"></i> Logout
+      </a>
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+        @csrf
+      </form>
+    </li>
+  </ul>
+</li>
+
+
             <!--end::User Menu Dropdown-->
           </ul>
           <!--end::End Navbar Links-->
@@ -147,7 +167,7 @@
           <a href="./index.html" class="brand-link">
             <!--begin::Brand Image-->
             <img
-              src="{{ asset('dist/assets/img/AdminLTELogo.png') }}"
+              src="{{ asset('dist/assets/img/12535246.png') }}"
               alt="AdminLTE Logo"
               class="brand-image opacity-75 shadow"
             />
@@ -220,21 +240,13 @@
 </li>
 
 
-               
-
-{{-- <li class="nav-item">
-    <a href="{{ route('timetable.index') }}" class="nav-link">
-        <i class="nav-icon bi bi-calendar2-week"></i>
-        <p>Timetable</p>
+<li class="nav-item">
+    <a href="{{ route('blogs.index') }}" class="nav-link {{ request()->routeIs('blogs.*') ? 'active' : '' }}">
+       <i class="nav-icon bi bi-chat-text"></i>
+        <p>Discussion</p>
     </a>
-</li> --}}
+</li>
 
-{{-- <li class="nav-item">
-    <a href="{{ route('assignment.index') }}" class="nav-link">
-        <i class="nav-icon bi bi-file-earmark-text"></i>
-        <p>Assignment Files</p>
-    </a>
-</li> --}}
 
              
             </ul>

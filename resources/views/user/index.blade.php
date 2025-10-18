@@ -30,9 +30,12 @@
                             <button type="submit" class="btn btn-secondary btn-sm">Search</button>
                         </form>
 
+                        @if(Auth::user()->role == 1)
                         <a href="{{ route('user.create') }}" class="btn btn-primary btn-sm">
                             + Add User
                         </a>
+                    @endif
+
                     </div>
                 </div>
 
@@ -66,7 +69,10 @@
                                     <th>Father Name</th>
                                     <th>Gender</th>
                                     <th>NRC</th>
-                                    <th>Action</th>
+                                    @if(Auth::user()->role == 1)
+    <th>Action</th>
+@endif
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -83,19 +89,22 @@
                                     <td>{!! highlight($user->father_name, request('search')) !!}</td>
                                     <td>{!! highlight($user->gender, request('search')) !!}</td>
                                     <td>{!! highlight($user->nrc, request('search')) !!}</td>
-                                    <td>
-                                        <a href="{{ route('user.edit',$user->id) }}" class="btn btn-warning btn-sm text-black">
-                                            <i class="bi bi-pencil-square"></i> Edit
-                                        </a>
-                                        <form action="{{route('user.destroy',$user->id) }}" method="post" class="d-inline-block">
-                                            @csrf
-                                            @method('delete')
-                                            <button class="btn btn-danger btn-sm text-white"
-                                                onclick="return confirm('Are you sure you want to delete this user?')">
-                                                <i class="bi bi-trash3"></i> Delete
-                                            </button>
-                                        </form>
-                                    </td>
+                                    @if(Auth::user()->role == 1)
+    <td>
+        <a href="{{ route('users.edit',$user->id) }}" class="btn btn-warning btn-sm text-black">
+            <i class="bi bi-pencil-square"></i> Edit
+        </a>
+        <form action="{{route('user.destroy',$user->id) }}" method="post" class="d-inline-block">
+            @csrf
+            @method('delete')
+            <button class="btn btn-danger btn-sm text-white"
+                onclick="return confirm('Are you sure you want to delete this user?')">
+                <i class="bi bi-trash3"></i> Delete
+            </button>
+        </form>
+    </td>
+@endif
+
                                 </tr>
                                 @endforeach
                             </tbody>
