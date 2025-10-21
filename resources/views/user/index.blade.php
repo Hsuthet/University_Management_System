@@ -92,14 +92,14 @@
                                     @if(Auth::user()->role == 1)
     <td>
         <a href="{{ route('users.edit',$user->id) }}" class="btn btn-warning btn-sm text-black">
-            <i class="bi bi-pencil-square"></i> Edit
+            <i class="bi bi-pencil-square"></i>
         </a>
         <form action="{{route('user.destroy',$user->id) }}" method="post" class="d-inline-block">
             @csrf
             @method('delete')
             <button class="btn btn-danger btn-sm text-white"
                 onclick="return confirm('Are you sure you want to delete this user?')">
-                <i class="bi bi-trash3"></i> Delete
+                <i class="bi bi-trash3"></i> 
             </button>
         </form>
     </td>

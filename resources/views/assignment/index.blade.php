@@ -6,9 +6,11 @@
            <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center w-100">
                         <h5 class="mb-0 fw-bold">Assignment List</h5>
+                         @if(Auth::user()->role == 2)
                         <a href="{{ route('assignment.create') }}" class="btn btn-primary btn-sm">
                             + Add Assignment
                         </a>
+                        @endif
                     </div>
                 </div>
         <div class="card-body">
@@ -23,7 +25,9 @@
                         <th>Department</th>
                         <th>Deadline</th>
                         <th>File</th>
+                         @if(Auth::user()->role == 2)
                         <th>Action</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -38,6 +42,7 @@
                                     <a href="{{ asset('storage/'.$assignment->assignment_file) }}" target="_blank">View</a>
                                 @endif
                             </td>
+                             @if(Auth::user()->role == 2)
                             <td class="d-flex gap-1">
                               <a href="{{ route('assignment.edit',$assignment->id) }}" class="btn btn-warning btn-sm text-black">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -56,6 +61,7 @@
                                         </button> </form>
 
                             </td>
+                             @endif
                         </tr>
                     @empty
                         <tr><td colspan="6" class="text-center">No assignments found</td></tr>

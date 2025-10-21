@@ -8,9 +8,11 @@
                   <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center w-100">
                         <h5 class="mb-0 fw-bold">Academic Year List</h5>
+                         @if(Auth::user()->role == 1)
                         <a href="{{ route('academicyear.create') }}" class="btn btn-primary btn-sm">
                             + Add Academic Year
                         </a>
+                        @endif
                     </div>
                 </div>
 
@@ -21,7 +23,9 @@
                             <th scope="col">#</th>
                             <th scope="col">Academic Year</th>
                             <th scope="col">Semester</th>
+                             @if(Auth::user()->role == 1)
                             <th scope="col">Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -30,6 +34,7 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $year->name }}</td>
                             <td>{{ $year->semester_name }}</td>
+                             @if(Auth::user()->role == 1)
                             <td class="d-flex align-items-center gap-1">
                                 <!-- Edit Button -->
                                 <a href="{{ route('academicyear.edit', $year->id) }}" class="btn btn-warning btn-sm p-1">
@@ -45,7 +50,7 @@
                                     </button>
                                 </form>
                             </td>
-                           
+                           @endif
                         </tr>
                         @endforeach
                     </tbody>

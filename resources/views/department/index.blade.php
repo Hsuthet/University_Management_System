@@ -29,10 +29,11 @@
                                    placeholder="Search Department...">
                             <button type="submit" class="btn btn-secondary btn-sm">Search</button>
                         </form>
-
+ @if(Auth::user()->role == 1)
                         <a href="{{ route('department.create') }}" class="btn btn-primary btn-sm">
                             + Add Department
                         </a>
+                        @endif
                     </div>
                 </div>
 
@@ -66,6 +67,7 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{!! highlight($department->name, request('search')) !!}</td>
                             <td>{!! highlight($department->content, request('search')) !!}</td>
+                             @if(Auth::user()->role == 1)
                             <td class="d-flex align-items-center gap-1">
 
                                 <!-- Edit Button -->
@@ -90,6 +92,7 @@
                                     </button>
                                 </form>
                             </td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>
