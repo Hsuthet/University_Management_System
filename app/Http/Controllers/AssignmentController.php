@@ -10,11 +10,12 @@ use Illuminate\Support\Facades\Storage;
 class AssignmentController extends Controller
 {
     // Display paginated list
-    public function index()
-    {
-        $assignments = Assignment::with('department')->paginate(10);
-        return view('assignment.index', compact('assignments'));
-    }
+  public function index()
+{
+    $assignments = Assignment::with('department')->get();
+    return view('assignment.index', compact('assignments'));
+}
+
 
     // Show create form
     public function create()

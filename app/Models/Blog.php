@@ -8,7 +8,11 @@ class Blog extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'content'];
+    protected $fillable = [
+        'content',
+        'user_id',
+        'file_path',
+    ];
 
     public function user()
     {

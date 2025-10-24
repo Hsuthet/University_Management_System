@@ -62,7 +62,7 @@ class UserController extends Controller
 
         User::create($data);
 
-        return redirect()->route('users.index');
+        return redirect()->route('user.index');
     }
 
     public function edit($id) {
@@ -120,4 +120,13 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('user.index');
     }
+
+    public function show(User $user)
+{
+    // Fetch the user and optionally their blogs
+    $blogs = $user->blogs()->latest()->get();
+
+    return view('user.profile', compact('user', 'blogs'));
+}
+
 }
