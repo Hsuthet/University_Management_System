@@ -69,9 +69,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/users/create', [UserController::class,'create'])->name('user.create');
     Route::post('/users', [UserController::class,'store'])->name('user.store');
     Route::get('/users/edit/{id}', [UserController::class,'edit'])->name('users.edit');
-Route::put('/users/update/{id}', [UserController::class,'update'])->name('users.update');
-
+    Route::put('/users/update/{id}', [UserController::class,'update'])->name('users.update');
     Route::delete('/users/delete/{id}', [UserController::class,'destroy'])->name('user.destroy');
+    Route::get('/user/{user}', [UserController::class, 'show'])->name('user.profile');
+
 
     Route::get('/timetables', [TimetableController::class,'index'])->name('timetable.index');
     Route::get('/timetables/create', [TimetableController::class,'create'])->name('timetable.create');
