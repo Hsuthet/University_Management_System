@@ -17,6 +17,17 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    protected $appends = ['profile_image'];
+ 
+public function getProfileImageAttribute()
+{
+    if (!isset($this->attributes['profile_image']) || !$this->attributes['profile_image']) {
+        return null;
+    }
+
+    return asset('storage/' . $this->attributes['profile_image']);
+}
+
     protected $fillable = [
         'name',
         'email',
@@ -34,6 +45,7 @@ class User extends Authenticatable
         'profile_image'
     ];
 
+    
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -42,6 +54,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'age',
     ];
 
      public function department() {

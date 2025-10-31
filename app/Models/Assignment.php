@@ -8,6 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Assignment extends Model
 {
     use HasFactory;
+    protected $appends = ['assignment_file'];
+ 
+public function getAssignmentFileAttribute()
+{
+    if (!$this->attributes['assignment_file']) {
+        return null;
+    }
+ 
+    return asset('storage/' . $this->attributes['assignment_file']);
+}
      protected $fillable = [
         'name',
         'department_id',

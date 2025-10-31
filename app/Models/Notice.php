@@ -8,6 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Notice extends Model
 {
     use HasFactory;
+    protected $appends = ['notice_image'];
+ 
+public function getNoticeImageAttribute()
+{
+    if (!$this->attributes['notice_image']) {
+        return null;
+    }
+ 
+    return asset('storage/' . $this->attributes['notice_image']);
+}
      protected $fillable = [
         'event_name',
         'description',
