@@ -10,15 +10,16 @@ use Illuminate\Http\Request;
 class TimetableController extends Controller
 {
     // Display a paginated list of timetable entries
-    public function index()
-    {
-        $timetables = Timetable::with(['department', 'academicYear'])
-            ->orderBy('day')
-            ->orderBy('start_time')
-            ->paginate(1);
+   public function index()
+{
+    $timetables = Timetable::with(['department', 'academicYear'])
+        ->orderBy('day')
+        ->orderBy('start_time')
+        ->paginate(10); // <-- Use paginate
 
-        return view('timetable.index', compact('timetables'));
-    }
+    return view('timetable.index', compact('timetables'));
+}
+
 
     // Show the form for creating a new timetable entry
     public function create()

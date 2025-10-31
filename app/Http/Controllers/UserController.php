@@ -87,7 +87,7 @@ class UserController extends Controller
         'address' => 'nullable|string',
         'roll_number' => 'nullable|string',
         'father_name' => 'nullable|string',
-        'password' => 'nullable|string|min:6', 
+        'password' => 'required|string|min:6', 
         'gender' => 'nullable|in:male,female,other',
         'nrc' => 'nullable|string',
         'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
