@@ -42,4 +42,25 @@ class AcademicYearApiController extends Controller
 
         return response()->json(['message' => 'Academic year deleted successfully', 'academic_year' => $year]);
     }
+
+    public function academicYearCreate(Request $request)
+    {
+         
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'semester_name' => 'nullable|string',
+        ]);
+            
+        $academic = new AcademicYear();
+        $academic->name = $request->name;
+        $academic->semester_name = $request->semester_name;
+        $academic->save();
+
+
+        return response()->json([
+            'message' => 'Semester created successfully',
+            'academic' => $academic,
+        ]);
+    }
 }

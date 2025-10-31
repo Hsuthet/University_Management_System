@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,7 @@ class UserApiController extends Controller{
     {
         
         $user = User::findOrFail($id);
-        return $user;
+       return new UserResource($user);
     }
 
     public function userDelete($id)
@@ -38,24 +39,28 @@ class UserApiController extends Controller{
 
     // Update user
     public function userUpdate(Request $request, $id)
-    {
-        $user = User::findOrFail($id);
+{
+    $user = User::findOrFail($id);
 
-        $validatedData = $request->validate([
-            'name' => 'sometimes|required|string|max:255',
-            'email' => 'sometimes|required|string|email|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:6',
-        ]);
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|unique:users,email,' . $user->id,
+        'password' => 'nullable|string|min:6',
+    ]);
 
-        if (isset($validatedData['password'])) {
-            $validatedData['password'] = bcrypt($validatedData['password']);
-        }
-
-        $user->update($validatedData);
-
-        return response()->json([
-            'message' => 'User updated successfully',
-            'user' => $user,
-        ]);
+    if (!empty($validatedData['password'])) {
+        $validatedData['password'] = bcrypt($validatedData['password']);
+    } else {
+        unset($validatedData['password']);
     }
+
+    $user->update($validatedData);
+    $user->refresh(); 
+
+    return response()->json([
+        'message' => 'User updated successfully',
+        'user' => $user,
+    ]);
+}
+
 }

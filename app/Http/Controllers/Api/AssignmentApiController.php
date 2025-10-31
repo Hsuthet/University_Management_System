@@ -42,4 +42,28 @@ class AssignmentApiController extends Controller
 
         return response()->json(['message' => 'Assignment deleted successfully', 'assignment' => $assignment]);
     }
+
+    public function assignmentCreate(Request $request)
+    {
+         
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'department_id' => 'nullable|string',
+            'deadline' => 'required|date',
+            'assignment_file' => 'nullable|file|mimes:pdf,doc,docx',
+        ]);
+            
+        $assignment = new Assignment();
+        $assignment->name = $request->name;
+        $assignment->department_id = $request->department_id;
+          $assignment->deadline = $request->deadline;
+          $assignment->assignment_file = $request->assignment_file;
+        $assignment->save();
+
+
+        return response()->json([
+            'message' => 'Assignment created successfully',
+            'assignment' => $assignment,
+        ]);
+    }
 }

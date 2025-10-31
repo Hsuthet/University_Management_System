@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BlogApiController extends Controller
 {
@@ -41,4 +42,32 @@ class BlogApiController extends Controller
 
         return response()->json(['message' => 'Blog deleted successfully', 'blog' => $blog]);
     }
+
+    public function blogCreate(Request $request)
+{
+    $request->validate([
+        'user_id' => 'required|exists:users,id', // explicitly provide user_id
+        'content' => 'required|string',
+        'file' => 'nullable|file|mimes:jpg,jpeg,png,gif,pdf,doc,docx,mp4|max:10240',
+    ]);
+
+    $filePath = null;
+    if ($request->hasFile('file')) {
+        $filePath = $request->file('file')->store('blogs', 'public');
+    }
+
+    $blog = Blog::create([
+        'user_id' => $request->user_id, // take from request
+        'content' => $request->content,
+        'file_path' => $filePath,
+    ]);
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Blog post created successfully.',
+        'data' => $blog
+    ], 201);
+}
+
+
 }
