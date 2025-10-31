@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfileController;
 use PHPUnit\Framework\Error\Notice;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +50,8 @@ Route::middleware(['auth'])->group(function () {
     })->name('dashboard');
     
     //Route::resource('posts', PostController::class);
+
+     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/departments', [DepartmentController::class, 'index'])->name('department.index');
     Route::get('/departments/create', [DepartmentController::class, 'create'])->name('department.create');
