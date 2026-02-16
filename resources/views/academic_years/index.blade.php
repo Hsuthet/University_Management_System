@@ -38,7 +38,7 @@
                             <td class="d-flex align-items-center gap-1">
                                 <!-- Edit Button -->
                                 <a href="{{ route('academicyear.edit', $year->id) }}" class="btn btn-warning btn-sm p-1">
-                                    <i class="bi bi-pencil-square">Edit</i>
+                                    <i class="bi bi-pencil-square"></i>
                                 </a>
 
                                 <!-- Delete Button -->
@@ -46,7 +46,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger btn-sm p-1" onclick="return confirm('Are you sure you want to delete this academic year?')">
-                                        <i class="bi bi-trash3">Delete</i>
+                                        <i class="bi bi-trash3"></i>
                                     </button>
                                 </form>
                             </td>

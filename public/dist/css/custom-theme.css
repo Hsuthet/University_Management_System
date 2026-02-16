@@ -1,90 +1,188 @@
-/* ===== Professional Dashboard Theme ===== */
+/* ======================================================
+   🎓 University Management System — Custom Dashboard Theme
+   Author: YourName
+   Last Updated: 2025-10-24
+====================================================== */
 
-body {
+/* ===== Global Styles ===== */
+body, html {
   font-family: 'Inter', sans-serif;
-  background-color: #f3f4f6;
+  background-color: #ffffff;
   color: #111827;
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
 }
 
-/* NAVBAR */
-.app-header {
-  background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+* {
+  transition: all 0.2s ease;
+  box-sizing: border-box;
 }
-.navbar-nav .nav-link {
-  color: #1f2937;
-  font-weight: 500;
-  transition: color 0.3s ease;
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar {
+  width: 8px;
 }
-.navbar-nav .nav-link:hover {
-  color: #1e40af;
-}
-.navbar-nav .dropdown-menu {
+::-webkit-scrollbar-thumb {
+  background-color: #9ca3af;
   border-radius: 10px;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #6b7280;
 }
 
-/* SIDEBAR */
+/* ======================================================
+   🎓 Sidebar
+====================================================== */
 .app-sidebar {
-  background-color: #0f172a;
-  color: #e2e8f0;
+  background-color: #0b1a33 !important;
+  color: #dbe2ef !important;
+  border-right: 1px solid rgba(255,255,255,0.1);
   box-shadow: 2px 0 10px rgba(0,0,0,0.15);
+  border-radius: 0 1rem 1rem 0;
+  transition: all 0.3s ease;
+  width: 250px !important; 
+  min-width: 250px !important;
 }
+
+.sidebar-wrapper {
+  width: 100% !important;
+  scrollbar-width: thin;
+  scrollbar-color: #f5b301 #0b1a33;
+}
+
+.sidebar-wrapper::-webkit-scrollbar {
+  width: 8px;
+}
+.sidebar-wrapper::-webkit-scrollbar-thumb {
+  background-color: #f5b301;
+  border-radius: 10px;
+}
+.sidebar-wrapper::-webkit-scrollbar-track {
+  background-color: #0b1a33;
+}
+
+/* Sidebar Brand */
 .sidebar-brand {
   border-bottom: 1px solid rgba(255,255,255,0.08);
   text-align: center;
   padding: 1.2rem 0;
 }
-.brand-text {
-  font-weight: 600;
-  color: #f8fafc;
-  letter-spacing: 0.5px;
+.sidebar-brand .brand-image {
+  width: 45px;
+  height: 45px;
 }
+.sidebar-brand .brand-text {
+  letter-spacing: 0.5px;
+  white-space: normal;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f5b301;
+  transition: color 0.3s ease;
+}
+/* Hover effect for brand text */
+.sidebar-brand:hover .brand-text {
+  color: #ffffff;
+}
+
+/* Sidebar Menu */
 .sidebar-menu .nav-link {
-  color: #cbd5e1;
+  color: #dbe2ef !important;
   border-radius: 10px;
   margin: 4px 10px;
   transition: all 0.25s ease;
   display: flex;
   align-items: center;
-}
-.sidebar-menu .nav-link.active,
-.sidebar-menu .nav-link:hover {
-  background-color: #1e40af;
-  color: #ffffff;
+  font-weight: 500;
 }
 .sidebar-menu .nav-icon {
   font-size: 1.2rem;
   margin-right: 10px;
+  color: #f5b301;
+}
+.sidebar-menu .nav-link:hover {
+  background-color: rgba(245,179,1,0.15);
+  color: #ffffff !important;
+}
+.sidebar-menu .nav-link.active {
+  background-color: #f5b301 !important;
+  color: #0b1a33 !important;
+  font-weight: 600;
+}
+.sidebar-menu .nav-link.active .nav-icon {
+  color: #0b1a33 !important;
 }
 
-/* MAIN CONTENT */
+/* ======================================================
+   🎓 Navbar
+====================================================== */
+.app-header {
+  background-color: #ffffff !important;
+  color: #111827 !important;
+  border-bottom: 2px solid #f5b301;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+}
+
+.navbar-nav .nav-link {
+  color: #111827 !important;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #f5b301 !important;
+}
+
+.navbar-nav .dropdown-menu {
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  background-color: #ffffff;
+  color: #111827;
+}
+
+/* ======================================================
+   🎓 Main Content
+====================================================== */
 .app-content {
-  background-color: #f3f4f6;
+  background-color: #ffffff;
+  color: #111827;
   padding: 20px;
+  transition: all 0.3s ease;
 }
 
-/* CARDS */
+/* ======================================================
+   🎓 Cards
+====================================================== */
 .card {
+  background-color: #ffffff;
+  color: #111827;
   border: none;
   border-radius: 14px;
-  background-color: #ffffff;
   box-shadow: 0 3px 10px rgba(0,0,0,0.04);
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+.card:hover {
+  transform: translateY(-3px);
 }
 .card-header {
-  background-color: #f9fafb;
-  border-bottom: 1px solid #e5e7eb;
+  background-color: #ffffff;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
   font-weight: 600;
   color: #111827;
 }
 
-/* BUTTONS */
+/* ======================================================
+   🎓 Buttons
+====================================================== */
 .btn-primary {
   background-color: #1e40af;
+  color: #fff;
   border: none;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 .btn-primary:hover {
   background-color: #1d4ed8;
@@ -98,42 +196,23 @@ body {
   color: #fff;
 }
 
-/* DROPDOWN MENU */
-.dropdown-menu {
-  border-radius: 10px;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 5px 25px rgba(0,0,0,0.08);
-}
-.dropdown-item {
-  border-radius: 8px;
-  transition: background-color 0.2s ease;
-}
-.dropdown-item:hover {
-  background-color: #f3f4f6;
-}
-
-/* FOOTER */
+/* ======================================================
+   🎓 Footer
+====================================================== */
 .app-footer {
   background-color: #ffffff;
-  border-top: 1px solid #e5e7eb;
   color: #6b7280;
+  border-top: 2px solid #f5b301;
   padding: 0.8rem 1rem;
   font-size: 0.9rem;
+  text-align: center;
+  transition: all 0.3s ease;
 }
-
-/* SCROLLBAR */
-::-webkit-scrollbar {
-  width: 8px;
+.app-footer a {
+  color: #6b7280;
+  text-decoration: none;
 }
-::-webkit-scrollbar-thumb {
-  background-color: #9ca3af;
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background-color: #6b7280;
-}
-
-/* SMOOTH INTERACTIONS */
-* {
-  transition: all 0.2s ease;
+.app-footer a:hover {
+  text-decoration: underline;
+  color: #ffd65a;
 }

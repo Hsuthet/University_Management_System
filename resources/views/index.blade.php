@@ -81,77 +81,85 @@
              </ul>
           <!--end::Start Navbar Links-->
           <!--begin::End Navbar Links-->
-          <ul class="navbar-nav ms-auto">
-           
-            
-            <!--begin::Fullscreen Toggle-->
-            <li class="nav-item">
-              <a class="nav-link" href="#" data-lte-toggle="fullscreen">
-                <i data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i>
-                <i data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none"></i>
-              </a>
-            </li>
-            <!--end::Fullscreen Toggle-->
-            <!--begin::User Menu Dropdown-->
-           <li class="nav-item dropdown">
-  <a
-    class="nav-link d-flex align-items-center"
-    href="#"
-    id="userDropdown"
-    role="button"
-    data-bs-toggle="dropdown"
-    aria-expanded="false"
-  >
-    <img
-      src="{{ Auth::user()->profile_image 
-            ? asset('storage/' . Auth::user()->profile_image) 
-            : asset('dist/assets/img/default-avatar.png') }}"
-      alt="User Avatar"
-      class="rounded-circle me-2"
-      style="width: 35px; height: 35px; object-fit: cover;"
-    />
-    <div class="d-none d-md-block text-start">
-      <span class="fw-semibold">{{ Auth::user()->name }}</span><br />
-    </div>
-    <i class="bi bi-chevron-down ms-2"></i>
-  </a>
+         <ul class="navbar-nav ms-auto align-items-center">
 
-  <ul
-    class="dropdown-menu dropdown-menu-end shadow-lg border-0 p-2"
-    aria-labelledby="userDropdown"
-    style="min-width: 220px;"
-  >
-    <li class="text-center p-2 border-bottom">
-      <img
-        src="{{ Auth::user()->profile_image 
-              ? asset('storage/' . Auth::user()->profile_image) 
-              : asset('dist/assets/img/default-avatar.png') }}"
-        alt="Profile"
-        class="rounded-circle mb-2"
-        style="width: 60px; height: 60px; object-fit: cover;"
-      />
-      <h6 class="mb-0">{{ Auth::user()->name }}</h6>
-      <small class="text-muted">{{ Auth::user()->email }}</small>
-    </li>
-    <li>
-      <a href="{{ route('profiles.show') }}" class="dropdown-item">
-        <i class="bi bi-person me-2"></i> Profile
-      </a>
-    </li>
-    <li><hr class="dropdown-divider" /></li>
-    <li>
-      <a
-        href="{{ route('logout') }}"
-        class="dropdown-item text-danger"
-        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-      >
-        <i class="bi bi-box-arrow-right me-2"></i> Logout
-      </a>
-      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-        @csrf
-      </form>
-    </li>
-  </ul>
+
+  <!-- 🖥 Fullscreen Toggle -->
+  <li class="nav-item me-2">
+    <a class="nav-link" href="#" data-lte-toggle="fullscreen" title="Fullscreen">
+      <i data-lte-icon="maximize" class="bi bi-arrows-fullscreen fs-5"></i>
+      <i data-lte-icon="minimize" class="bi bi-fullscreen-exit fs-5" style="display: none"></i>
+    </a>
+  </li>
+
+  <!-- 👤 User Menu -->
+  <li class="nav-item dropdown">
+    <a
+      class="nav-link d-flex align-items-center"
+      href="#"
+      id="userDropdown"
+      role="button"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+    <img
+    src="{{ 
+        !empty($user->profile_image) 
+            ? (Str::startsWith($user->profile_image, 'http') 
+                ? $user->profile_image 
+                : asset('storage/' . $user->profile_image)
+              )
+            : asset('dist/assets/img/default-avatar.png') 
+    }}"
+    alt="User Avatar"
+    class="rounded-circle me-2"
+    style="width: 35px; height: 35px; object-fit: cover;"
+/>
+      <div class="d-none d-md-block text-start">
+        <span class="fw-semibold d-block">{{ Auth::user()->name }}</span>
+      </div>
+      <i class="bi bi-chevron-down ms-2"></i>
+    </a>
+
+    <ul
+      class="dropdown-menu dropdown-menu-end shadow-lg border-0 p-2 mt-2"
+      aria-labelledby="userDropdown"
+      style="min-width: 230px;"
+    >
+      <li class="text-center p-2 border-bottom">
+        <img
+          src="{{ Auth::user()->profile_image 
+                ? asset('storage/' . Auth::user()->profile_image) 
+                : asset('dist/assets/img/default-avatar.png') }}"
+          alt="Profile"
+          class="rounded-circle mb-2"
+          style="width: 60px; height: 60px; object-fit: cover;"
+        />
+        <h6 class="mb-0">{{ Auth::user()->name }}</h6>
+        <small class="text-muted">{{ Auth::user()->email }}</small>
+      </li>
+      <li>
+        <a href="{{ route('profiles.show') }}" class="dropdown-item py-2">
+          <i class="bi bi-person me-2 text-primary"></i> Profile
+        </a>
+      </li>
+      <li><hr class="dropdown-divider"></li>
+      <li>
+        <a
+          href="{{ route('logout') }}"
+          class="dropdown-item text-danger py-2"
+          onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+        >
+          <i class="bi bi-box-arrow-right me-2"></i> Logout
+        </a>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+          @csrf
+        </form>
+      </li>
+    </ul>
+  </li>
+</ul>
+
 </li>
 
 
@@ -162,103 +170,94 @@
         <!--end::Container-->
       </nav>
       <!--end::Header-->
-      <!--begin::Sidebar-->
-      <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
-        <!--begin::Sidebar Brand-->
-        <div class="sidebar-brand">
-          <!--begin::Brand Link-->
-          <a href="./index.html" class="brand-link">
-            <!--begin::Brand Image-->
-            <img
-              src="{{ asset('dist/assets/img/12535246.png') }}"
-              alt="AdminLTE Logo"
-              class="brand-image opacity-75 shadow"
-            />
-            <!--end::Brand Image-->
-            <!--begin::Brand Text-->
-            <span class="brand-text fw-light">University Mangement</span>
-            <!--end::Brand Text-->
-          </a>
-          <!--end::Brand Link-->
-        </div>
-        <!--end::Sidebar Brand-->
-        <!--begin::Sidebar Wrapper-->
-        <div class="sidebar-wrapper">
-          <nav class="mt-2">
-            <!--begin::Sidebar Menu-->
-            <ul
-              class="nav sidebar-menu flex-column"
-              data-lte-toggle="treeview"
-              role="menu"
-              data-accordion="false"
-            >
-             
-              {{-- <li class="nav-item">
-                <a href="./generate/theme.html" class="nav-link">
-                  <i class="nav-icon bi bi-palette"></i>
-                  <p>Theme Generate</p>
-                </a>
-              </li> --}}
+
+
+     <!--begin::Sidebar-->
+<aside class="app-sidebar shadow">
+    <!--begin::Sidebar Brand-->
+    <div class="sidebar-brand py-3 px-3 d-flex align-items-center">
+    <a href="{{ url('/') }}" class="d-flex align-items-center w-100 text-decoration-none">
+        <img src="{{ asset('dist/assets/img/12535246.png') }}" 
+             alt="University Logo" 
+             class="brand-image me-2" 
+             style="width: 50px; height: 50px; object-fit: contain;" />
+        <span class="brand-text">
+            University Management
+        </span>
+    </a>
+</div>
+
+    <!--end::Sidebar Brand-->
+
+    <!--begin::Sidebar Wrapper-->
+    <div class="sidebar-wrapper">
+        <nav class="mt-2">
+            <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
 
                 <li class="nav-item">
-    <a href="{{ route('user.index') }}" class="nav-link {{ request()->routeIs('user.*') ? 'active' : '' }}">
-        <i class="nav-icon bi bi-people"></i>
-        <p>Users</p>
-    </a>
-</li>
+                  <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                      <i class="nav-icon bi bi-speedometer2"></i>
+                      <p>Dashboard</p>
+                  </a>
+              </li>
 
-<li class="nav-item">
-    <a href="{{ route('department.index') }}" class="nav-link {{ request()->routeIs('department.*') ? 'active' : '' }}">
-        <i class="nav-icon bi bi-building"></i>
-        <p>Departments</p>
-    </a>
-</li>
+                <li class="nav-item">
+                    <a href="{{ route('user.index') }}" class="nav-link {{ request()->routeIs('user.*') ? 'active' : '' }}">
+                        <i class="nav-icon bi bi-people"></i>
+                        <p>Users</p>
+                    </a>
+                </li>
 
-<li class="nav-item">
-    <a href="{{ route('academicyear.index') }}" class="nav-link {{ request()->routeIs('academicyear.*') ? 'active' : '' }}">
-        <i class="nav-icon bi bi-calendar"></i>
-        <p>Academic Years</p>
-    </a>
-</li>
+                <li class="nav-item">
+                    <a href="{{ route('department.index') }}" class="nav-link {{ request()->routeIs('department.*') ? 'active' : '' }}">
+                        <i class="nav-icon bi bi-building"></i>
+                        <p>Departments</p>
+                    </a>
+                </li>
 
-<li class="nav-item">
-    <a href="{{ route('notices.index') }}" class="nav-link {{ request()->routeIs('notices.*') ? 'active' : '' }}">
-        <i class="nav-icon bi bi-bell"></i>
-        <p>Events</p>
-    </a>
-</li>
+                <li class="nav-item">
+                    <a href="{{ route('academicyear.index') }}" class="nav-link {{ request()->routeIs('academicyear.*') ? 'active' : '' }}">
+                        <i class="nav-icon bi bi-calendar"></i>
+                        <p>Academic Years</p>
+                    </a>
+                </li>
 
-<li class="nav-item">
-    <a href="{{ route('timetable.index') }}" class="nav-link {{ request()->routeIs('timetable.*') ? 'active' : '' }}">
-        <i class="nav-icon bi bi-calendar2-week"></i>
-        <p>Timetable</p>
-    </a>
-</li>
+                <li class="nav-item">
+                    <a href="{{ route('notices.index') }}" class="nav-link {{ request()->routeIs('notices.*') ? 'active' : '' }}">
+                        <i class="nav-icon bi bi-bell"></i>
+                        <p>Events</p>
+                    </a>
+                </li>
 
-<li class="nav-item">
-    <a href="{{ route('assignment.index') }}" class="nav-link {{ request()->routeIs('assignment.*') ? 'active' : '' }}">
-        <i class="nav-icon bi bi-file-earmark-text"></i>
-        <p>Assignment Files</p>
-    </a>
-</li>
+                <li class="nav-item">
+                    <a href="{{ route('timetable.index') }}" class="nav-link {{ request()->routeIs('timetable.*') ? 'active' : '' }}">
+                        <i class="nav-icon bi bi-calendar2-week"></i>
+                        <p>Timetable</p>
+                    </a>
+                </li>
 
+                <li class="nav-item">
+                    <a href="{{ route('assignment.index') }}" class="nav-link {{ request()->routeIs('assignment.*') ? 'active' : '' }}">
+                        <i class="nav-icon bi bi-file-earmark-text"></i>
+                        <p>Assignment Files</p>
+                    </a>
+                </li>
 
-<li class="nav-item">
-    <a href="{{ route('blogs.index') }}" class="nav-link {{ request()->routeIs('blogs.*') ? 'active' : '' }}">
-       <i class="nav-icon bi bi-chat-text"></i>
-        <p>Discussion</p>
-    </a>
-</li>
+                <li class="nav-item">
+                    <a href="{{ route('blogs.index') }}" class="nav-link {{ request()->routeIs('blogs.*') ? 'active' : '' }}">
+                        <i class="nav-icon bi bi-chat-text"></i>
+                        <p>Discussion</p>
+                    </a>
+                </li>
 
-
-             
             </ul>
-            <!--end::Sidebar Menu-->
-          </nav>
-        </div>
-        <!--end::Sidebar Wrapper-->
-      </aside>
-      <!--end::Sidebar-->
+        </nav>
+    </div>
+    <!--end::Sidebar Wrapper-->
+</aside>
+<!--end::Sidebar-->
+
+
       <!--begin::App Main-->
       <main class="app-main">
     
@@ -548,6 +547,7 @@
       sparkline3.render();
     </script>
     <!--end::Script-->
+    @stack('scripts')
   </body>
   <!--end::Body-->
 </html>

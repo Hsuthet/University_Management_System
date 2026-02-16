@@ -10,17 +10,23 @@
             <!-- Header with pale background -->
            <div class="card-header text-center position-relative py-5" style="background-color: #e5e7eb;">
 
-    {{-- Profile Image --}}
-    @if ($user->profile_image)
-        <img src="{{ asset('storage/' . $user->profile_image) }}" 
-             alt="Profile Image" 
-             class="rounded-circle mb-3 shadow-sm border" 
-             width="150" height="150">
+  @if (!empty($user->profile_image))
+        @if (Str::startsWith($user->profile_image, 'http'))
+            <img src="{{ $user->profile_image }}" 
+                 alt="Profile Image" 
+                 class="rounded-circle shadow-sm border" 
+                 style="width: 150px; height: 150px; object-fit: cover;">
+        @else
+            <img src="{{ asset('storage/' . $user->profile_image) }}" 
+                 alt="Profile Image" 
+                 class="rounded-circle shadow-sm border" 
+                 style="width: 150px; height: 150px; object-fit: cover;">
+        @endif
     @else
         <img src="{{ asset('images/default-avatar.png') }}" 
              alt="Default Avatar" 
-             class="rounded-circle mb-3 shadow-sm border" 
-             width="150" height="150">
+             class="rounded-circle shadow-sm border" 
+             style="width: 150px; height: 150px; object-fit: cover;">
     @endif
 
     {{-- Name --}}
